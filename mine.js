@@ -14,15 +14,15 @@ page.open('http://www.biography.com/people/search/obama', function (status) {
     //page.evaluate(function(){
 
     //});
-	console.log('Status: ' + status);	
-	
-	if (status !== 'success') {
+    console.log('Status: ' + status);
+    
+    if (status !== 'success') {
         console.log('Unable to load the address!');
-	} else {
+    } else {
         window.setTimeout(function () {
-			page.render('export.png');
-			fs.write('export.html', page.content, 'w');
-			phantom.exit();
-		}, 1000);
-	}
+            page.render('export.png');
+            fs.write('export.html', page.content, 'w');
+            phantom.exit();
+        }, 1000);
+    }
 });

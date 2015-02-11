@@ -5,18 +5,18 @@ var server = require('webserver').create();
 var port = require('system').env.PORT || 8080; // default back to 8080
 console.log(port);
 //var queryString = window.location.search;
-var queryString = document.location.search;
-var subqueryString = queryString.substring(1);
 console.log(queryString);
 console.log(subqueryString);
 
 server.listen(port, function(request, response) {
 
-  var page = new WebPage();
-  page.settings.resourceTimeout = 750;
+    var queryString = request.url;
+    var subqueryString = queryString.substring(1);
+    var page = new WebPage();
+    page.settings.resourceTimeout = 750;
 
-//page.open('http://www.biography.com/people/search/obama', function (status) {
-  page.open('http://radiosearchengine.com', function (status) {
+    //page.open('http://www.biography.com/people/search/obama', function (status) {
+    page.open('http://radiosearchengine.com', function (status) {
 
     console.log('Status: ' + status);
     response.statusCode = 200;
