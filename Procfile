@@ -1,1 +1,1 @@
-web: phantomjs example-ben.js
+web: phantomjs fetch.js
