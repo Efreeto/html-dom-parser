@@ -1,1 +1,1 @@
-web: phantomjs example.js
+web: phantomjs simpleserver.js 8080
