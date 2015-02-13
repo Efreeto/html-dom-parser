@@ -1,3 +1,5 @@
+/* http://benjaminbenben.com/2013/07/28/phantomjs-webserver/ */
+
 // import the webserver module, and create a server
 var server = require('webserver').create();
 

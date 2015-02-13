@@ -4,9 +4,6 @@ var server = require('webserver').create();
 // start a server and register a request listener
 var port = require('system').env.PORT || 8080; // default back to 8080
 
-var urlObj;
-var urlAddress
-
 var service = server.listen(port, function(request, response) {
 
     var page = new WebPage();
@@ -15,13 +12,12 @@ var service = server.listen(port, function(request, response) {
     console.log('Request at ' + new Date());
     console.log(JSON.stringify(request, null, 4));
 
-    urlObj = parseGET(request.url);
-    urlAddress = (typeof urlObj.url !== 'undefined') ? urlObj.url : "index.html";
-    if (typeof urlObj.timeout !== 'undefined') {
-        page.settings.resourceTimeout = urlObj.timeout;
-    }
-    console.log('address: '+urlAddress);
-    console.log('timeout: '+page.settings.resourceTimeout);
+    var urlObj = parseGET(request.url);
+    var urlAddress = (typeof urlObj.url !== 'undefined') ? urlObj.url : "index.html";
+    page.settings.resourceTimeout = urlObj.halttime;
+    console.log('address: ' + urlAddress);
+    console.log('halttime: ' + page.settings.resourceTimeout);
+    console.log('waittime: ' + urlObj.waittime);
 
     /*
     page.onResourceRequested = function(requestData, networkRequest) {
@@ -33,11 +29,13 @@ var service = server.listen(port, function(request, response) {
     };*/
 
     page.open(urlAddress, function () {
-        response.statusCode = 200;    // HTTP Code: OK
-        response.write(page.content); // page.content, page.plainText, htmlContent
-        response.close();
+        window.setTimeout(function () {
+            response.statusCode = 200;    // HTTP Code: OK
+            response.write(page.content); // page.content, page.plainText, htmlContent
+            response.close();
 
-        page.close();
+            page.close();
+        }, urlObj.waittime);
     });
 });
 if (service) {
@@ -46,7 +44,7 @@ if (service) {
     console.log('Ctrl+C to close server');
     console.log('');
 } else {
-    console.log('Error: Could not create web server listening on port ' + port);
+    console.log('Error: Could not create web server listening on port '+ port);
     phantom.exit();
 }
 
