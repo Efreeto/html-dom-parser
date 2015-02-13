@@ -1,4 +1,6 @@
 
+/* http://stackoverflow.com/questions/16856036/save-html-output-of-page-after-execution-of-the-pages-javascript */
+
 var page = require('webpage').create();
 var fs = require('fs');
 page.settings.resourceTimeout = 550;
