@@ -19,7 +19,6 @@ var service = server.listen(port, function(request, response) {
     console.log('halttime: ' + page.settings.resourceTimeout);
     console.log('waittime: ' + urlObj.waittime);
 
-    /* simple mode (same as Chrome View Source)
     page.onResourceRequested = function(requestData, networkRequest) {
         //console.log('onResourceRequested: '+JSON.stringify(requestData.url, null, 4));
         //if ((/http:\/\/.+?\.css/gi).test(requestData['url']) || requestData.headers['Content-Type'] == 'text/css') {
@@ -27,18 +26,16 @@ var service = server.listen(port, function(request, response) {
             networkRequest.abort();
             return;
         }
-        page.resources[requestData.id] = {
+        /*page.resources[requestData.id] = {
             request: requestData,
             startReply: null,
             endReply: null
-        };
+        };*/
     };
-    */
-    
+
     page.open(urlAddress, function () {
         window.setTimeout(function () {
             response.statusCode = 200;    // HTTP Code: OK
-            //var htmlContent = page.evaluate(function () { return document.documentElement.outerHTML; });
             response.write(page.content); // page.content, page.plainText, htmlContent
             response.close();
 
