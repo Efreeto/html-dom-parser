@@ -37,9 +37,11 @@ var service = server.listen(port, function(request, response) {
     
     page.open(urlAddress, function () {
         window.setTimeout(function () {
-            response.statusCode = 200;    // HTTP Code: OK
+                        
+            response.statusCode = 200;    // HTTP Code: OK            
+            var replaced_content = page.content.replace('location.replace','location_dont_replace');
             //var htmlContent = page.evaluate(function () { return document.documentElement.outerHTML; });
-            response.write(page.content); // page.content, page.plainText, htmlContent
+            response.write(replaced_content); // page.content, page.plainText, htmlContent(from above code)
             response.close();
 
             page.close();
