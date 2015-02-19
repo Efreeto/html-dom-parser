@@ -10,42 +10,38 @@ var service = server.listen(port, function(request, response) {
     
     console.log('-------------------------------------------------------------------------------');
     console.log('Request at ' + new Date());
-    //console.log(JSON.stringify(request, null, 4));
+    console.log(JSON.stringify(request, null, 4));
 
     var urlObj = parseGET(request.url);
-    //var urlAddress = (typeof urlObj.url !== 'undefined') ? urlObj.url : "index.html";
+    var urlAddress = (typeof urlObj.url !== 'undefined') ? urlObj.url : "index.html";
     page.settings.resourceTimeout = urlObj.halttime;
-    //console.log('address: ' + urlAddress);
-    //console.log('halttime: ' + page.settings.resourceTimeout);
-    //console.log('waittime: ' + urlObj.waittime);
+    console.log('address: ' + urlAddress);
+    console.log('halttime: ' + page.settings.resourceTimeout);
+    console.log('waittime: ' + urlObj.waittime);
 
-    var redirectURLs = [],
-    doLog = false;
-
+    /* simple mode (same as Chrome View Source)
     page.onResourceRequested = function(requestData, networkRequest) {
-        if (doLog) console.log('Request (#' + requestData.id + '): ' + JSON.stringify(requestData) + "\n");
-        if (redirectURLs.indexOf(requestData.url) !== -1) {
-            // this is a redirect url
-            //console.log('REDIRECT URL!!');
-            //networkRequest.abort();
+        //console.log('onResourceRequested: '+JSON.stringify(requestData.url, null, 4));
+        //if ((/http:\/\/.+?\.css/gi).test(requestData['url']) || requestData.headers['Content-Type'] == 'text/css') {
+        if (requestData.url.indexOf(urlAddress) !== 0) {
+            networkRequest.abort();
+            return;
         }
+        page.resources[requestData.id] = {
+            request: requestData,
+            startReply: null,
+            endReply: null
+        };
     };
-
-    page.onResourceReceived = function(response) {
-        if (doLog) console.log('Response (#' + response.id + ', stage "' + response.stage + '"): ' + JSON.stringify(response) + "\n");
-        if (response.status >= 300 && response.status < 400 && response.redirectURL) { // maybe more specific
-            //console.log('REDIRECT URL PUSHED.....');
-            console.log('redirectURL: '+response.redirectURL);
-            redirectURLs.push(response.redirectURL);
-        }
-    };
+    */
     
-    console.log(phantom.cookies);
-
-    page.open(urlObj.url, function () {
+    page.open(urlAddress, function () {
         window.setTimeout(function () {
-            response.statusCode = 200;    // HTTP Code: OK
-            response.write(page.content); // page.content, page.plainText, htmlContent
+                        
+            response.statusCode = 200;    // HTTP Code: OK            
+            var replaced_content = page.content.replace('function loaded','function bye');
+            //var htmlContent = page.evaluate(function () { return document.documentElement.outerHTML; });
+            response.write(replaced_content); // page.content, page.plainText, htmlContent(from above code)
             response.close();
 
             page.close();
