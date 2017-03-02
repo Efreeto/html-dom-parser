@@ -3,20 +3,26 @@
 <body>
 <p>HTML DOM PARSER</p>
 <p>&nbsp;</p>
-<p>Usage: /?url=<i>url</i>&amp;halttime=<i>halttime</i>&amp;waittime=<i>waittime</i></p>
-<p><i>url</i> : web address</p>
+<p>This program loads another web page to parse its internal structure, then turn it into a single html file.</p>
+<p>Its purpose is to help other non-browser, web crawler programs with no ability to parse into the internal structure on their own. (For example, wget with no option or an in-house company tool that can only read in the first page and not its dependencies)</p>
+<p>&nbsp;</p>
+<p>Usage:</p>
+<p>/?url=<i>url</i>&amp;halttime=<i>halttime</i>&amp;waittime=<i>waittime</i></p>
+<p><i>url</i> : web address for the raw html</p>
 <p><i>halttime</i> : (optional) interrupt page loading after this time. Used when page loading takes too long. Unit is millisecond.</p>
-<p><i>waittime</i> : (optional) extend page loading at least for this time. Used when page loading finishes before writing useful data. Unit is millisecond.</p>
+<p><i>waittime</i> : (optional) extend page loading at least for this time. Used when page loading finishes before writing any useful data. Unit is millisecond.</p>
 <p>&nbsp;</p>
-<p>Example:</p>
-<p>&nbsp;<a href="?url=https://github.com/">/?url=https://github.com/</a></p>
-<p>&nbsp;<a href="?url=http://radiosearchengine.com&amp;halttime=1000">/?url=http://radiosearchengine.com&amp;halttime=1000</a></p>
-<p>&nbsp;<a href="?url=http://www.biography.com/people/search/obama&amp;waittime=5000">/?url=http://www.biography.com/people/search/obama&amp;waittime=5000</a></p>
+<p>Examples:</p>
+<p><a href="?url=https://www.youtube.com">/?url=https://www.youtube.com</a></p>
+<p>It shows the raw html the website without making any recommendations from the youtube account you may have.</p>
 <p>&nbsp;</p>
-<p>The purpose of this program is to parse out internal structures of a web page into a single html file.</p>
-<p>It is designed to help other html reading programs (like wget with no option) that can only read in the first page and not its dependencies.</p>
+<p><strike><a href="?url=http://radiosearchengine.com&amp;halttime=1000">/?url=http://radiosearchengine.com&amp;halttime=1000</a></strike></p>
+<p>This website is now offline. This site used to take too long to load, but interrupting the loading with 'halttime' still gave useful information.</p>
 <p>&nbsp;</p>
-<p>Woo Kim (wook@voicebox.com)</p>
-<p>MIT Licensed source code at <a href="https://github.com/efreet929/html-dom-parser">https://github.com/efreet929/html-dom-parser</a>
-<p>By the power of PhantomJS Webserver</p>
+<p><a href="/?url=http://www.biography.com/people/barack-obama-12782369&waittime=5000">/?url=http://www.biography.com/people/barack-obama-12782369&waittime=5000</a></p>
+<p>This website returns results too quickly and without any useful information if you are not browsing properly. But if the loading time is extended with 'waittime', it returns results correctly.</p>
+<p>&nbsp;</p>
+<p>MIT Licensed source code at <a href="https://github.com/Efreeto/html-dom-parser">https://github.com/Efreeto/html-dom-parser</a>
+<p>Woo Kim (woowon.kim@gmail.com)</p>
+<p>Powered by PhantomJS Webserver</p>
 </body></html>
